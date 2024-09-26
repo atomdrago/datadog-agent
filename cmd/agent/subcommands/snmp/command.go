@@ -210,6 +210,7 @@ func Commands(globalParams *command.GlobalParams) []*cobra.Command {
 			}
 			return nil
 		},
+		Hidden: true,
 	}
 	// TODO is there a way to merge these flags with snmpWalkCmd flags, without cobra changing the docs to mark them as "global flags"?
 	snmpScanCmd.Flags().VarP(versionOpts.Flag(&connParams.Version), "snmp-version", "v", fmt.Sprintf("Specify SNMP version to use (%s)", versionOpts.OptsStr()))
