@@ -20,6 +20,7 @@ type ServiceMetadata struct {
 	Language           string
 	Type               string
 	APMInstrumentation string
+	ContainerID        string
 }
 
 func fixAdditionalNames(additionalNames []string) []string {
