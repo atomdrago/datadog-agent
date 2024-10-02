@@ -10,6 +10,7 @@ package servicediscovery
 import (
 	"time"
 
+	workloadmeta "github.com/DataDog/datadog-agent/comp/core/workloadmeta/def"
 	"github.com/DataDog/datadog-agent/pkg/collector/corechecks/servicediscovery/model"
 	"github.com/DataDog/datadog-agent/pkg/collector/corechecks/servicediscovery/servicetype"
 	pkgconfigsetup "github.com/DataDog/datadog-agent/pkg/config/setup"
@@ -28,17 +29,19 @@ type linuxImpl struct {
 	time              timer
 
 	ignoreCfg map[string]bool
+	store     workloadmeta.Component
 
 	ignoreProcs       map[int]bool
 	aliveServices     map[int]*serviceInfo
 	potentialServices map[int]*serviceInfo
 }
 
-func newLinuxImpl(ignoreCfg map[string]bool) (osImpl, error) {
+func newLinuxImpl(ignoreCfg map[string]bool, store workloadmeta.Component) (osImpl, error) {
 	return &linuxImpl{
 		getSysProbeClient: getSysProbeClient,
 		time:              realTime{},
 		ignoreCfg:         ignoreCfg,
+		store:             store,
 		ignoreProcs:       make(map[int]bool),
 		aliveServices:     make(map[int]*serviceInfo),
 		potentialServices: make(map[int]*serviceInfo),
